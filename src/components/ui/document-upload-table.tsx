@@ -95,7 +95,7 @@ export default function DocumentUploadTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {documents.map((doc: Document) =>
+          {documents ? documents.map((doc: Document) =>
               doc.userId === userId ? (
                 <TableRow key={doc.id}>
                   <TableCell>{doc.name}</TableCell>
@@ -122,7 +122,7 @@ export default function DocumentUploadTable({
               ) : (
                 <></>
               )
-            )}
+            ): <></>}
           </TableBody>
         </Table>
       </CardContent>
