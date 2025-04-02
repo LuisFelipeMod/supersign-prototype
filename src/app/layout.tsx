@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Rubik } from 'next/font/google'
+import { Rubik } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/ui/app-sidebar"
 
-const rubik = Rubik({ subsets: ['latin'] })
+const rubik = Rubik({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "SuperSign Prototype",
@@ -16,10 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body
-        className={`${rubik.className} antialiased`}
-      >
-        {children}
+      <body className={`${rubik.className} antialiased`}>
+          <main className="container mx-auto min-h-screen">
+            {children}
+          </main>
+        <Toaster />
       </body>
     </html>
   );
