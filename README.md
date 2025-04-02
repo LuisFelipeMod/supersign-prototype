@@ -6,9 +6,11 @@
   - [Visão Geral](#Visão-Geral)
   - [Decisões Técnicas](#Decisões-Técnicas)
 - [Como testar o projeto?](#como-testar-o-projeto)
-- [Rodar local](#rodal-local)
-  - [Pré-requisitos](#pré-requisitos)
-  - [Instalação](#instalação)
+- [Desafios Enfrentados e Soluções Adotadas](#Desafios-Enfrentados-e-Soluções-Adotadas)
+- [Funcionalidades](#Funcionalidades)
+- [Como-testar-o-projeto?](#Como-testar-o-projeto?)
+  - [Pré-requisitos](#Pré-requisitos)
+  - [Instalação](#Instalação)
 
 # Arquitetura e Decisões Técnicas
 
