@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import NextAuth, { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -6,7 +7,8 @@ import { compare } from "bcrypt";
 
 const prisma = new PrismaClient();
 
-const authOptions: AuthOptions = {
+export const authOptions: AuthOptions = {
+  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
@@ -20,7 +22,7 @@ const authOptions: AuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          return null; 
+          return null;
         }
 
         const user = await prisma.user.findUnique({
@@ -33,7 +35,7 @@ const authOptions: AuthOptions = {
 
         const isPasswordValid = await compare(
           credentials.password,
-          user.password
+          user.password as string
         );
         if (!isPasswordValid) {
           return null;
@@ -54,7 +56,44 @@ const authOptions: AuthOptions = {
       session.user.id = token.sub as string;
       return session;
     },
+    async signIn({ user, account }) {
+      if (account?.provider === "google") {
+        try {
+          const existingUser = await prisma.user.findUnique({
+            where: { email: user.email! },
+          });
+
+          if (!existingUser) {
+            await prisma.user.create({
+              data: {
+                email: user.email!,
+                name: user.name!,
+                password: "",
+                accounts: {
+                  create: {
+                    provider: account.provider,
+                    providerAccountId: account.providerAccountId,
+                    type: account.type,
+                    access_token: account.access_token ?? "",
+                    id_token: account.id_token ?? "",
+                    refresh_token: account.refresh_token ?? "",
+                    scope: account.scope ?? "",
+                    expires_at: account.expires_at ?? 0,
+                  },
+                },
+              },
+            });
+          }
+          return true;
+        } catch (error) {
+          console.error("Erro ao criar usuário OAuth:", error);
+          return false;
+        }
+      }
+      return true;
+    },
   },
+
 };
 
 const handler = NextAuth(authOptions);
