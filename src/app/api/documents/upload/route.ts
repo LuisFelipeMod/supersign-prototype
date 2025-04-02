@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     const userId = formData.get("userId") as string;
 
     if (!file) {
-      return new Response("Nenhum arquivo enviado"), { status: 400 };
+      return NextResponse.json("Nenhum arquivo enviado"), { status: 400 };
     }
 
     const fileExtension = mime.getExtension(file.type) || "dat";
