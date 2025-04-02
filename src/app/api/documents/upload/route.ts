@@ -17,6 +17,10 @@ export async function POST(req: Request) {
       return NextResponse.json("Nenhum arquivo enviado"), { status: 400 };
     }
 
+    if (file.type !== "application/pdf") {
+      return NextResponse.json({ error: "Apenas arquivos PDF são permitidos" }, { status: 400 });
+    }
+
     const fileExtension = mime.getExtension(file.type) || "dat";
     const fileKey = `${randomUUID()}.${fileExtension}`;
     const fileName = file.name;
