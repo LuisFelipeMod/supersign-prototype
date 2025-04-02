@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/sidebar";
 import ButtonLogout from "./buttonLogout";
 
-// Menu items.
 const items = [
   {
     title: "Documentos",
@@ -38,7 +37,7 @@ export async function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <div className="flex items-center mb-5 mt-2">
+          <div className="flex items-center mb-5 mt-2 justify-between px-2">
             <Image
               className="rounded-full"
               src={userImage}
