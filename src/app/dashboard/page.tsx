@@ -1,25 +1,18 @@
 import { AppSidebar } from "@/components/ui/app-sidebar";
-import { Button } from "@/components/ui/button";
 import ButtonLogout from "@/components/ui/buttonLogout";
-import DocumentUpload from "@/components/ui/document-upload";
-import Header from "@/components/ui/header";
+import DocumentUploadTable from "@/components/ui/document-upload-table";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { getServerSession } from "next-auth";
-import { signOut } from "next-auth/react";
-import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
   const session = await getServerSession();
+  const userEmail = session?.user.email as string;
 
   return (
     <SidebarProvider>
       <AppSidebar />
-      <section>
-        <SidebarTrigger />
-
-        <p>Bem vindo, {session?.user.name}</p>
-        <DocumentUpload />
-        <ButtonLogout>Sair</ButtonLogout>
+      <section className="mt-5">
+        <DocumentUploadTable userEmail={userEmail} />
       </section>
     </SidebarProvider>
   );
