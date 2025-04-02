@@ -1,7 +1,6 @@
 import { AppSidebar } from "@/components/ui/app-sidebar";
-import ButtonLogout from "@/components/ui/buttonLogout";
 import DocumentUploadTable from "@/components/ui/document-upload-table";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { getServerSession } from "next-auth";
 
 export default async function Dashboard() {
